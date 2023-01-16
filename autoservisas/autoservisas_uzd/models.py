@@ -9,12 +9,14 @@ import uuid
 class AutomobilioModelis(models.Model):
     marke = models.CharField(verbose_name="Automobilio gamintojas", max_length=50, help_text="Įveskite automobilio gamintoją")
     modelis = models.CharField(verbose_name="Automobilio modelis", max_length=100, help_text="Įveskite automobilio modelį")
+    metai = models.CharField(verbose_name="Automobilio pagaminimo metai", max_length=10, help_text="Įveskite automobilio pagaminimo metus")
+    variklis = models.CharField(verbose_name="Automobilio variklis", max_length=5, help_text="Įveskite automobilio variklio tūrį")
 
     class Meta:
         verbose_name_plural = "Automobilio modeliai"
 
     def __str__(self):
-        return f"{self.marke} {self.modelis}"
+        return f"{self.marke} {self.modelis} {self.metai}"
 
 
 class Automobilis(models.Model):
@@ -55,10 +57,13 @@ class Paslauga(models.Model):
 
 
 class UzsakymoEilute(models.Model):
-    paslauga = models.ForeignKey(to="Paslauga", on_delete=models.SET_NULL, null=True)
     uzsakymas = models.ForeignKey(to="Uzsakymas", on_delete=models.CASCADE)
+    paslauga = models.ForeignKey(to="Paslauga", on_delete=models.SET_NULL, null=True)
     kiekis = models.CharField(verbose_name="Kiekis", max_length=5, help_text="Įveskite kiekį")
     kaina = models.CharField(verbose_name="Kaina", max_length=10, help_text="Įveskite kainą")
 
     class Meta:
         verbose_name_plural = "Užsakymo eilutės"
+
+    def __str__(self):
+        return f"{self.paslauga} - {self.uzsakymas}"
