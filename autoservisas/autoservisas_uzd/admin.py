@@ -9,16 +9,25 @@ from .models import (AutomobilioModelis,
                      UzsakymoEilute)
 
 
-class UzsakymoEiluteInline(admin.TabularInline):    # kokia klase norime atvaizduoti
+class AutomobilisAdmin(admin.ModelAdmin):
+    list_display = ("klientas", "automobilio_modelis", "valstybinis_nr", "vin_kodas")
+
+
+class UzsakymoEiluteInline(admin.TabularInline):    # kokia klase norime atvaizduoti kitoje klaseje
     model = UzsakymoEilute
 
 
-class UzsakymasAdmin(admin.ModelAdmin):             # Kokioje klaseje norime matyti
+class UzsakymasAdmin(admin.ModelAdmin):             # Kokioje klaseje norime matyti kita klase
     inlines = [UzsakymoEiluteInline]
+    list_display = ("automobilis", "data")
+
+
+class PaslaugaAdmin(admin.ModelAdmin):
+    list_display = ("pavadinimas", "kaina")
 
 
 admin.site.register(AutomobilioModelis)
-admin.site.register(Automobilis)
+admin.site.register(Automobilis, AutomobilisAdmin)
 admin.site.register(Uzsakymas, UzsakymasAdmin)
-admin.site.register(Paslauga)
+admin.site.register(Paslauga, PaslaugaAdmin)
 admin.site.register(UzsakymoEilute)
