@@ -69,4 +69,4 @@ class UzsakymoEilute(models.Model):
         verbose_name_plural = "Užsakymo eilutės"
 
     def __str__(self):
-        return f"{self.paslauga} - {self.uzsakymas}"
+        return f"{self.paslauga} - {self.kiekis}"
