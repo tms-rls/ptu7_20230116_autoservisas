@@ -11,6 +11,8 @@ from .models import (AutomobilioModelis,
 
 class AutomobilisAdmin(admin.ModelAdmin):
     list_display = ("klientas", "automobilio_modelis", "valstybinis_nr", "vin_kodas")
+    list_filter = ("klientas", "automobilio_modelis__modelis")
+    search_fields = ("valstybinis_nr", "vin_kodas")
 
 
 class UzsakymoEiluteInline(admin.TabularInline):    # kokia klase norime atvaizduoti kitoje klaseje
