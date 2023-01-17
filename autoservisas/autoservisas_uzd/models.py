@@ -11,8 +11,8 @@ class AutomobilioModelis(models.Model):
     modelis = models.CharField(verbose_name="Automobilio modelis", max_length=100,
                                help_text="Įveskite automobilio modelį")
 
-
     class Meta:
+        verbose_name = "Automobilio modelis"
         verbose_name_plural = "Automobilio modeliai"
 
     def __str__(self):
@@ -27,6 +27,7 @@ class Automobilis(models.Model):
     klientas = models.CharField(verbose_name="Klientas", max_length=200, help_text="Įveskite klientą")
 
     class Meta:
+        verbose_name = "Automobilis"
         verbose_name_plural = "Automobiliai"
 
     def __str__(self):
@@ -46,10 +47,12 @@ class Uzsakymas(models.Model):
 
 
 class Paslauga(models.Model):
-    pavadinimas = models.CharField(verbose_name="Paslaugos pavadinimas", max_length=200, help_text="Įveskite paslaugos pavadinimą")
+    pavadinimas = models.CharField(verbose_name="Paslaugos pavadinimas", max_length=200,
+                                   help_text="Įveskite paslaugos pavadinimą")
     kaina = models.FloatField(verbose_name="Paslaugos kaina", help_text="Įveskite paslaugos kainą")
 
     class Meta:
+        verbose_name = "Paslauga"
         verbose_name_plural = "Paslaugos"
 
     def __str__(self):
