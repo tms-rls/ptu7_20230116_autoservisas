@@ -15,7 +15,7 @@ class AutomobilisAdmin(admin.ModelAdmin):
     search_fields = ("valstybinis_nr", "vin_kodas")
 
 
-class UzsakymoEiluteInline(admin.TabularInline):    # kokia klase norime atvaizduoti kitoje klaseje
+class UzsakymoEiluteInline(admin.TabularInline):    # kokia klase norime atvaizduoti kitoje klaseje, nereikia registruoti atskirai
     model = UzsakymoEilute
 
 
