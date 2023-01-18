@@ -42,6 +42,13 @@ class Uzsakymas(models.Model):
         verbose_name = "Užsakymas"
         verbose_name_plural = "Užsakymai"
 
+    def bendra_uzsakymo_suma(self):
+        suma = 0
+        visos_uzsakymo_eilutes = self.eilutes.all()
+        for eilute in visos_uzsakymo_eilutes:
+            suma += eilute.uzsakymo_eilutes_suma()
+        return suma
+
     def __str__(self):
         return f"{self.automobilis} -- {self.data}"
 
@@ -60,7 +67,7 @@ class Paslauga(models.Model):
 
 
 class UzsakymoEilute(models.Model):
-    uzsakymas = models.ForeignKey(to="Uzsakymas", on_delete=models.CASCADE)
+    uzsakymas = models.ForeignKey(to="Uzsakymas", on_delete=models.CASCADE, related_name="eilutes")
     paslauga = models.ForeignKey(to="Paslauga", on_delete=models.SET_NULL, null=True)
     kiekis = models.IntegerField(verbose_name="Kiekis", help_text="Įveskite kiekį")
 
@@ -68,5 +75,8 @@ class UzsakymoEilute(models.Model):
         verbose_name = "Užsakymo eilutė"
         verbose_name_plural = "Užsakymo eilutės"
 
+    def uzsakymo_eilutes_suma(self):
+        return self.paslauga.kaina * self.kiekis
+
     def __str__(self):
-        return f"{self.paslauga} - {self.kiekis}"
+        return f"{self.paslauga} ---- {self.kiekis}"

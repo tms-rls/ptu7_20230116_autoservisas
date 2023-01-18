@@ -17,11 +17,16 @@ class AutomobilisAdmin(admin.ModelAdmin):
 
 class UzsakymoEiluteInline(admin.TabularInline):    # kokia klase norime atvaizduoti kitoje klaseje, nereikia registruoti atskirai
     model = UzsakymoEilute
+    extra = 0
+
+
+class UzsakymoEiluteAdmin(admin.ModelAdmin):
+    list_display = ("uzsakymas", "paslauga", "kiekis", "uzsakymo_eilutes_suma")    #nurodome ne lauką o funkciją/metodą
 
 
 class UzsakymasAdmin(admin.ModelAdmin):             # Kokioje klaseje norime matyti kita klase
     inlines = [UzsakymoEiluteInline]
-    list_display = ("automobilis", "data")
+    list_display = ("automobilis", "data", "bendra_uzsakymo_suma")
 
 
 class PaslaugaAdmin(admin.ModelAdmin):
@@ -32,4 +37,4 @@ admin.site.register(AutomobilioModelis)
 admin.site.register(Automobilis, AutomobilisAdmin)
 admin.site.register(Uzsakymas, UzsakymasAdmin)
 admin.site.register(Paslauga, PaslaugaAdmin)
-admin.site.register(UzsakymoEilute)
+admin.site.register(UzsakymoEilute, UzsakymoEiluteAdmin)
