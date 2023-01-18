@@ -26,7 +26,7 @@ class UzsakymoEiluteAdmin(admin.ModelAdmin):
 
 class UzsakymasAdmin(admin.ModelAdmin):             # Kokioje klaseje norime matyti kita klase
     inlines = [UzsakymoEiluteInline]
-    list_display = ("automobilis", "data", "bendra_uzsakymo_suma")
+    list_display = ("automobilis", "data", "statusas", "bendra_uzsakymo_suma")
 
 
 class PaslaugaAdmin(admin.ModelAdmin):
