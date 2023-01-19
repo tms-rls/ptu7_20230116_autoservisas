@@ -1,0 +1,10 @@
+{% extends "bazinis.html" %}
+
+{% block content %}
+ <h4>{{ konkretus_automobilis }}</h4>
+  <h5>Pasirinkto automobilio {{ konkretus_automobilis }} informacija:</h5>
+   <li>Valstybinis numeris: {{ konkretus_automobilis.valstybinis_nr }}</li>
+   <li>Automobilio modelis: {{ konkretus_automobilis.automobilio_modelis }}</li>
+   <li>VIN kodas: {{ konkretus_automobilis.vin_kodas }}</li>
+   <li>Klientas: {{ konkretus_automobilis.klientas }}</li>
+{% endblock %}

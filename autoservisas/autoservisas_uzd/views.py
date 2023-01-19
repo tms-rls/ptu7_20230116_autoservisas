@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
@@ -28,3 +28,11 @@ def visi_automobiliai(request):
         "visi_automobiliai": visi_automobiliai
     }
     return render(request, "automobiliai.html", context=context)
+
+
+def konkretus_automobilis(request, automobilio_id):
+    konkretus_automobilis = get_object_or_404(Automobilis, pk=automobilio_id)
+    context = {
+        "konkretus_automobilis": konkretus_automobilis,
+    }
+    return render(request, "automobilis.html", context=context)
