@@ -1,0 +1,12 @@
+{% extends "bazinis.html" %}
+
+{% block content %}
+  <h1>Autoservisas "Garažas"</h1>
+  <p>Sveiki atvykę</p>
+  <p>Galime pasigirti savo statistika:</p>
+  <ul>
+    <li><strong>Šiuo metu mūsų teikiama paslaugų:</strong> {{ paslaugu_kiekis }}</li>
+    <li><strong>Mūsų atlikti užsakymai:</strong> {{ atliktu_uzsakymu_kiekis }}</li>
+    <li><strong>Mūsų aptarnaujamų automobilių:</strong> {{ automobiliu_kiekis }}</li>
+  </ul>
+{% endblock %}

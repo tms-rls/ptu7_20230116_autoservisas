@@ -38,7 +38,7 @@ class Uzsakymas(models.Model):
     data = models.DateTimeField(verbose_name="Užsakymo data", auto_now_add=True)
     automobilis = models.ForeignKey(to="Automobilis", on_delete=models.CASCADE)
     STATUSO_PASIRINKIMAI = (
-        (1, "Apdorojamas"),
+        (1, "Patvirtintas"),
         (2, "Vykdomas"),
         (3, "Įvykdytas"),
         (4, "Atšauktas"),
