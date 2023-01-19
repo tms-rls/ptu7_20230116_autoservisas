@@ -39,5 +39,11 @@ def konkretus_automobilis(request, automobilio_id):
 
 class UzsakymasListView(generic.ListView):
     model = Uzsakymas
-    context_object_name = "uzsakymai"
     template_name = "uzsakymai.html"
+    context_object_name = "uzsakymai"
+
+
+class UzsakymasDetailView(generic.DetailView):
+    model = Uzsakymas
+    template_name = "uzsakymas.html"
+    context_object_name = "konkretus_uzsakymas"

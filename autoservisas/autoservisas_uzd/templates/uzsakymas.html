@@ -1,0 +1,10 @@
+{% extends "bazinis.html" %}
+
+{% block title%}Užsakymas{% endblock %}
+
+{% block content %}
+ <h1>Užsakymo detalizacija</h1>
+   <li>Užsakymo data: {{ konkretus_uzsakymas.data }}</li>
+   <li>Automobilis: {{ konkretus_uzsakymas.automobilis }}</li>
+   <li>Užsakymo statusas: {{ konkretus_uzsakymas.statusas }}</li>
+{% endblock %}

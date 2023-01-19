@@ -6,6 +6,6 @@
  <h1>Užsakymų sąrašas</h1>
  {% for uzsakymas in uzsakymai %}
  <hr>
- <p><a href="">{{uzsakymas}}</a> </p>
+ <p><a href="{{ uzsakymas.id }}">{{uzsakymas}}</a> </p>
  {% endfor %}
 {% endblock %}
