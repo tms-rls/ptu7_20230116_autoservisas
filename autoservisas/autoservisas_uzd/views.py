@@ -3,7 +3,6 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.shortcuts import render
-from django.http import HttpResponse
 from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
@@ -21,3 +20,11 @@ def statistika(request):
     }
 
     return render(request, 'statistika.html', context=skaiciai)
+
+
+def visi_automobiliai(request):
+    visi_automobiliai = Automobilis.objects.all()
+    context = {
+        "visi_automobiliai": visi_automobiliai
+    }
+    return render(request, "automobiliai.html", context=context)

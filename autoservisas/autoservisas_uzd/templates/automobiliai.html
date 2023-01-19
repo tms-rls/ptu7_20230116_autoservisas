@@ -1,0 +1,9 @@
+{% extends "bazinis.html" %}
+
+{% block content %}
+  <h1>Visi aptarnaujami automobiliai</h1>
+  <p>Šiuo metu aptarnaujame šiuos automobilius:</p>
+  {% for automobilis in visi_automobiliai %}
+    <li>{{automobilis}}</li>
+  {% endfor %}
+{% endblock %}
