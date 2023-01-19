@@ -7,4 +7,12 @@
    <li>Užsakymo data: {{ konkretus_uzsakymas.data }}</li>
    <li>Automobilis: {{ konkretus_uzsakymas.automobilis }}</li>
    <li>Užsakymo statusas: {{ konkretus_uzsakymas.statusas }}</li>
+   <li>Užsakymo suma: {{ konkretus_uzsakymas.bendra_uzsakymo_suma }}</li>
+ <hr>
+ <h2>Užsakymo eilutės:</h2>
+ <ol>
+  {% for eilute in konkretus_uzsakymas.eilutes.all %}
+   <li>{{ eilute.paslauga }} {{ eilute.kiekis }} {{ eilute.uzsakymo_eilutes_suma }}</li>
+  {% endfor %}
+ </ol>
 {% endblock %}
