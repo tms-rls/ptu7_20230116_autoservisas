@@ -1,0 +1,11 @@
+{% extends "bazinis.html" %}
+
+{% block title %}Užsakymai{% endblock %}
+
+{% block content %}
+ <h1>Užsakymų sąrašas</h1>
+ {% for uzsakymas in uzsakymai %}
+ <hr>
+ <p><a href="">{{uzsakymas}}</a> </p>
+ {% endfor %}
+{% endblock %}

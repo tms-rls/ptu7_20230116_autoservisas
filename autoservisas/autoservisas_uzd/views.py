@@ -1,8 +1,7 @@
-from django.shortcuts import render
-
 # Create your views here.
 
 from django.shortcuts import render, get_object_or_404
+from django.views import generic
 from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
@@ -36,3 +35,9 @@ def konkretus_automobilis(request, automobilio_id):
         "konkretus_automobilis": konkretus_automobilis,
     }
     return render(request, "automobilis.html", context=context)
+
+
+class UzsakymasListView(generic.ListView):
+    model = Uzsakymas
+    context_object_name = "uzsakymai"
+    template_name = "uzsakymai.html"

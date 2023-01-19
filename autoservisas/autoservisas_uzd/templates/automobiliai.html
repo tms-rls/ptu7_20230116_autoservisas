@@ -4,7 +4,8 @@
   <h1>Visi aptarnaujami automobiliai</h1>
   <p>Šiuo metu aptarnaujame šiuos automobilius:</p>
   {% for auto in visi_automobiliai %}
-<li><a href="{% url 'konkretus_automobilis' auto.id %}">{{auto}}</a></li>
+    <hr>
+   <li><a href="{% url 'konkretus_automobilis' auto.id %}">{{auto}}</a></li>
 <!-- linke po url nurodoma konkreti funkcija esanti views.py faile-->
   {% endfor %}
 {% endblock %}
