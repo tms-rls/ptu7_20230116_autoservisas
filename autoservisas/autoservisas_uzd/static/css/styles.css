@@ -1,5 +1,3 @@
-.sidebar-nav {
-    margin-top: 20px;
-    padding: 0;
-    list-style: none;
-}
+body {background-color: powderblue;}
+h1 {color: blue; font-family:verdana; text-align:center}
+p {color: blue;}

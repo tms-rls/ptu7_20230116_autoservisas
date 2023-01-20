@@ -7,6 +7,10 @@ from .models import (Automobilis,
                      Paslauga)
 
 
+def pasisveikinimas(request):
+    return render(request, 'pradzia.html')
+
+
 def statistika(request):
     paslaugu_kiekis = Paslauga.objects.all().count()
     atliktu_uzsakymu_kiekis = Uzsakymas.objects.filter(statusas__exact=3).count()

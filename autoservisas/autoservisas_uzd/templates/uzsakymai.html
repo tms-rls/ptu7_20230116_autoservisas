@@ -1,9 +1,9 @@
 {% extends "bazinis.html" %}
 
-{% block title %}Užsakymai{% endblock %}
+{% block title %}{% endblock %}
 
 {% block content %}
- <h1>Užsakymų sąrašas</h1>
+ <h2>Užsakymų sąrašas</h2>
  {% for uzsakymas in uzsakymai %}
  <hr>
  <p><a href="{{ uzsakymas.id }}">{{uzsakymas}}</a> </p>
