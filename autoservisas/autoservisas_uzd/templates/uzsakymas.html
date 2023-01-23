@@ -4,10 +4,12 @@
 
 {% block content %}
  <h2>Užsakymo detalizacija</h2>
+ <ul>
    <li>Užsakymo data: {{ konkretus_uzsakymas.data }}</li>
    <li>Automobilis: {{ konkretus_uzsakymas.automobilis }}</li>
-   <li>Užsakymo statusas: {{ konkretus_uzsakymas.statusas }}</li>
+   <li>Užsakymo būsena: {{ konkretus_uzsakymas.get_statusas_display }}</li>
    <li>Užsakymo suma: {{ konkretus_uzsakymas.bendra_uzsakymo_suma }}</li>
+ </ul>
  <hr>
  <h2>Užsakymo eilutės:</h2>
  <ol>
