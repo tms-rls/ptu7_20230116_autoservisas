@@ -43,6 +43,7 @@ def konkretus_automobilis(request, automobilio_id):
 
 class UzsakymasListView(generic.ListView):
     model = Uzsakymas
+    paginate_by = 3
     template_name = "uzsakymai.html"
     context_object_name = "uzsakymai"
 
