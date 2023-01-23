@@ -2,6 +2,7 @@
 
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
+from django.core.paginator import Paginator
 from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
@@ -27,8 +28,11 @@ def statistika(request):
 
 def visi_automobiliai(request):
     visi_automobiliai = Automobilis.objects.all()
+    paginator = Paginator(visi_automobiliai, 2)
+    page_number = request.GET.get('page')
+    puslapiuoti_automobiliai = paginator.get_page(page_number)
     context = {
-        "visi_automobiliai": visi_automobiliai
+        "visi_automobiliai": puslapiuoti_automobiliai
     }
     return render(request, "automobiliai.html", context=context)
 

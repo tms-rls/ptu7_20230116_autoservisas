@@ -4,7 +4,26 @@
   <p>Šiuo metu aptarnaujame šiuos automobilius:</p>
   {% for auto in visi_automobiliai %}
     <hr>
-   <li><a href="{% url 'konkretus_automobilis' auto.id %}">{{auto}}</a></li>
+   <p><a href="{% url 'konkretus_automobilis' auto.id %}">{{auto}}</a></p>
 <!-- linke po url nurodoma konkreti funkcija esanti views.py faile-->
   {% endfor %}
+<div class="container puslapiai">
+    <nav aria-label="...">
+        {% if visi_automobiliai.has_other_pages %}
+            <ul class="pagination pagination-sm justify-content-end">
+                {% for i in visi_automobiliai.paginator.page_range %}
+                    {% if visi_automobiliai.number == i %}
+                        <li class="page-item active">
+                            <a class="page-link">{{ i }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </nav>
+</div>
 {% endblock %}
