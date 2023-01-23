@@ -11,7 +11,7 @@
    <li>Užsakymo suma: {{ konkretus_uzsakymas.bendra_uzsakymo_suma }}</li>
  </ul>
  <hr>
- <h2>Užsakymo eilutės:</h2>
+ <h2>Užsakytos paslaugos:</h2>
  <ol>
   {% for eilute in konkretus_uzsakymas.eilutes.all %}
    <li>{{ eilute.paslauga }} {{ eilute.kiekis }} {{ eilute.uzsakymo_eilutes_suma }}</li>
