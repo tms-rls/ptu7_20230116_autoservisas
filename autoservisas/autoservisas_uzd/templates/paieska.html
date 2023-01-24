@@ -1,0 +1,18 @@
+{% extends "bazinis.html" %}
+
+{% block content %}
+  <h2>Paieškos pagal užklausą "{{query}}" rezultatai:</h2>
+  </br>
+  {% if visi_automobiliai %}
+  <ul>
+    {% for automobilis in visi_automobiliai %}
+      <p>
+        <a href="{% url 'konkretus_automobilis' automobilis.id %}">{{ automobilis }}</a>
+      </p>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>Oops. Nieko neradome :(</p>
+  {% endif %}
+
+  {% endblock %}

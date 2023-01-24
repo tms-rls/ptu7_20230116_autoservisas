@@ -9,4 +9,5 @@ urlpatterns = [
     path("automobiliai/<int:automobilio_id>", views.konkretus_automobilis, name="konkretus_automobilis"),
     path("uzsakymai/", views.UzsakymasListView.as_view(), name="uzsakymai"),
     path("uzsakymai/<int:pk>", views.UzsakymasDetailView.as_view(), name="konkretus_uzsakymas"),
+    path('paieska/', views.paieska, name='paieska'),
     ]

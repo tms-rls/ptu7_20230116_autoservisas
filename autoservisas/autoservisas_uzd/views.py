@@ -3,6 +3,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views import generic
 from django.core.paginator import Paginator
+from django.db.models import Q
 from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
@@ -43,6 +44,16 @@ def konkretus_automobilis(request, automobilio_id):
         "konkretus_automobilis": konkretus_automobilis,
     }
     return render(request, "automobilis.html", context=context)
+
+
+def paieska(request):
+    query = request.GET.get('query')
+    search_results = Automobilis.objects.filter(Q(valstybinis_nr__icontains=query) |
+                                                Q(automobilio_modelis__marke__icontains=query) |
+                                                Q(automobilio_modelis__marke__icontains=query) |
+                                                Q(vin_kodas__icontains=query) |
+                                                Q(klientas__icontains=query))
+    return render(request, 'paieska.html', {'visi_automobiliai': search_results, 'query': query})
 
 
 class UzsakymasListView(generic.ListView):
