@@ -10,7 +10,9 @@ from .models import (Automobilis,
 
 
 def pasisveikinimas(request):
-    return render(request, 'pradzia.html')
+    sesiju_kiekis = request.session.get('sesiju_kiekis', 1)
+    request.session['sesiju_kiekis'] = sesiju_kiekis + 1
+    return render(request, 'pradzia.html', {'sesiju_kiekis': sesiju_kiekis})
 
 
 def statistika(request):
