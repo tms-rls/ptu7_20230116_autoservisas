@@ -13,7 +13,7 @@ class AutomobilioModelis(models.Model):
 
     class Meta:
         verbose_name = "Automobilio modelis"
-        verbose_name_plural = "Automobilio modeliai"
+        verbose_name_plural = "Automobilių modeliai"
 
     def __str__(self):
         return f"{self.marke} {self.modelis}"
@@ -25,6 +25,7 @@ class Automobilis(models.Model):
     automobilio_modelis = models.ForeignKey(to="AutomobilioModelis", on_delete=models.SET_NULL, null=True)
     vin_kodas = models.CharField(verbose_name="VIN kodas", max_length=50, help_text="Įveskite VIN kodą")
     klientas = models.CharField(verbose_name="Klientas", max_length=200, help_text="Įveskite klientą")
+    paveikslelis = models.ImageField(verbose_name="Paveikslėlis", upload_to="paveiksleliai", null=True, blank=True)
 
     class Meta:
         verbose_name = "Automobilis"
