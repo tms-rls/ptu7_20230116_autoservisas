@@ -1,20 +1,32 @@
 {% extends "bazinis.html" %}
 
+{% block title %}Automobiliai{% endblock %}
+
 {% block content %}
 {% load static %}
-  <p>Šiuo metu aptarnaujame šiuos automobilius:</p>
-  {% for auto in visi_automobiliai %}
-    <hr>
-   <p><a href="{% url 'konkretus_automobilis' auto.id %}">{{auto}}</a>
-   <p>
-    {% if auto.paveikslelis %}
-    <img src="{{ auto.paveikslelis.url }}" class="card-img-top" alt="...">
+<h2>Šiuo metu aptarnaujame šiuos automobilius:</h2>
+    {% if visi_automobiliai %}
+        <div class="row">
+            {% for automobilis in visi_automobiliai %}
+                <div class="col-md-4 d-flex align-items-stretch">
+                    <div class="card mb-4 shadow-sm">
+                        {% if automobilis.paveikslelis %}
+                            <img src="{{ automobilis.paveikslelis.url }}" class="card-img-top" alt="...">
+                        {% else %}
+                            <img src="{% static 'img/no-image.png' %}" class="card-img-top">
+                        {% endif %}
+                         <div class="card-body">
+                             <h6 class="card-subtitle mb-2 text-muted">{{ automobilis.automobilio_modelis }}</h6>
+                                 <p class="card-text"><a href="{% url 'konkretus_automobilis' automobilis.id %}">{{ automobilis.valstybinis_nr }}</a></p>
+                            <!-- linke po url nurodoma konkreti funkcija esanti views.py faile-->
+                         </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
     {% else %}
-    <img src="{% static 'img/no-image.png' %}" class="card-img-top"></p>
+        <p>Automobilių nėra.</p>
     {% endif %}
-   </p>
-<!-- linke po url nurodoma konkreti funkcija esanti views.py faile-->
-  {% endfor %}
 <div class="container puslapiai">
     <nav aria-label="...">
         {% if visi_automobiliai.has_other_pages %}
