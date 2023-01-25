@@ -1,8 +1,9 @@
 
 # Create your models here.
 
-
 from django.db import models
+from django.contrib.auth.models import User
+from datetime import date
 
 
 class AutomobilioModelis(models.Model):
@@ -38,6 +39,7 @@ class Automobilis(models.Model):
 class Uzsakymas(models.Model):
     data = models.DateTimeField(verbose_name="Užsakymo data", auto_now_add=True)
     automobilis = models.ForeignKey(to="Automobilis", on_delete=models.CASCADE)
+
     STATUSO_PASIRINKIMAI = (
         (1, "Patvirtintas"),
         (2, "Vykdomas"),
@@ -46,6 +48,9 @@ class Uzsakymas(models.Model):
     )
 
     statusas = models.IntegerField(choices=STATUSO_PASIRINKIMAI, default=1, help_text="Užsakymo statusas")
+    vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+    atlikimo_terminas = models.DateTimeField(verbose_name="Darbus atlikti iki",  null=True, blank=True,
+                                              help_text="Užsakymo atlikimo terminas")
 
     class Meta:
         verbose_name = "Užsakymas"
@@ -57,6 +62,12 @@ class Uzsakymas(models.Model):
         for eilute in visos_uzsakymo_eilutes:
             suma += eilute.uzsakymo_eilutes_suma()
         return suma
+
+    def terminas_suejo(self):
+        if self.atlikimo_terminas and date.today() > self.atlikimo_terminas:
+            return True
+        else:
+            return False
 
     def __str__(self):
         return f"{self.automobilis} -- {self.data}"
