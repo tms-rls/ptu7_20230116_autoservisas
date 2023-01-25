@@ -1,18 +1,19 @@
 {% extends "bazinis.html" %}
 
 {% load static %}
+
 {% block content %}
 
-    <h2>Mano užsakymai</h2>
-    {% if vartotojo_uzsakymai %}
-      {% for uzsakymas in vartotojo_uzsakymai %}
+<h2>Mano užsakymai</h2>
+{% if vartotojo_uzsakymai %}
+    {% for uzsakymas in vartotojo_uzsakymai %}
         <a href="{% url 'konkretus_uzsakymas' uzsakymas.id %}">
-      <p class="{% if uzsakymas.terminas_suejo %}text-danger{% endif %}">{{uzsakymas.automobilis}} - ({{ uzsakymas.atlikimo_terminas }}) - {{ uzsakymas.terminas_suejo }}</p>
-      </a>
-      {% endfor %}
-    {% else %}
-      <p>Šiuo metu neturite užsakymų.</p>
-    {% endif %}
+        <p class="{% if uzsakymas.terminas_suejo %}text-danger{% endif %}">{{uzsakymas.automobilis}} - ({{ uzsakymas.atlikimo_terminas }}) - {{ uzsakymas.terminas_suejo }}</p>
+        </a>
+    {% endfor %}
+{% else %}
+    <p>Šiuo metu neturite užsakymų.</p>
+{% endif %}
 <hr>
   <div class="pagination">
     <span class="step-links">
