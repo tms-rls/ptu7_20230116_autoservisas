@@ -1,41 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  {% block title %}<title>Autoservisas</title>{% endblock %}
+  <title>{% block title %}{% endblock %}</title>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
   <!-- Add additional CSS in static file -->
-  <style>
-      {% load static %}
-  </style>
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 <h1>Autoservisas "Garažas"</h1>
-  <nav class="navbar navbar-expand-sm bg-light">
-  <div class="container-fluid">
-    <ul class="navbar-nav">
-      <li><a href="{% url 'pradzia' %}">Pradžia</a></li>
-      <li><a href="{% url 'statistika' %}">Statistika</a></li>
-      <li><a href="{% url 'visi_automobiliai' %}">Automobiliai</a></li>
-      <li><a href="{% url 'uzsakymai' %}">Užsakymai</a></li>
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow">
+  <div class="container">
+    <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-          {% if user.is_authenticated %}
-            <li class="nav-item"><a class="nav-link" href="#">Esate prisijungęs, kaip: {{ user.get_username }}</a></li>
-       <li class="nav-item"><a class="nav-link" href="{% url 'vartotojo_uzsakymai' %}">Mano užsakymai</a></li>
-       <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Atsijungti</a></li>
-      {% else %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Prisijungti</a></li>
-      {% endif %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'pradzia' %}">Pradžia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'statistika' %}">Statistika</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'visi_automobiliai' %}">Automobiliai</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'uzsakymai' %}">Užsakymai</a>
+        </li>
+        {% if user.is_authenticated %}
+          <li class="nav-item"><a class="nav-link" href="#">Esate prisijungęs, kaip: {{ user.get_username }}</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'vartotojo_uzsakymai' %}">Mano užsakymai</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Atsijungti</a></li>
+        {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Prisijungti</a></li>
+        {% endif %}
+        <li>
+        <form action="{% url 'paieska' %}" method="get" class="form-inline my-2 my-md-0">
+        <input name="query" class="form-control" type="text" placeholder="Paieška">
+        </form>
+        </li>
       </ul>
-      <li>
-      <form action="{% url 'paieska' %}" method="get" class="form-inline my-2 my-md-0">
-      <input name="query" class="form-control" type="text" placeholder="Paieška">
-      </form>
-      </li>
-    </ul>
+    </div>
   </div>
-  </nav>
-  <div>{% block content %}{% endblock %}</div>
+</nav>
+<div class="container">
+  {% block content %}{% endblock %}
+</div>
 </body>
 </html>
