@@ -7,6 +7,7 @@ from django.db.models import Q
 from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def pasisveikinimas(request):
@@ -69,3 +70,13 @@ class UzsakymasDetailView(generic.DetailView):
     model = Uzsakymas
     template_name = "uzsakymas.html"
     context_object_name = "konkretus_uzsakymas"
+
+
+class VartotojoUzsakymaiListView(generic.ListView, LoginRequiredMixin):
+    model = Uzsakymas
+    template_name = "vartotojo_uzsakymai.html"
+    paginate_by = 2
+    context_object_name = "vartotojo_uzsakymai"
+
+    def get_queryset(self):
+        return Uzsakymas.objects.filter(vartotojas=self.request.user)

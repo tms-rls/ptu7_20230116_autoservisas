@@ -1,0 +1,33 @@
+{% extends "bazinis.html" %}
+
+{% block content %}
+{% load static %}
+    <h2>Mano užsakymai</h2>
+    {% if vartotojo_uzsakymai %}
+      {% for uzsakymas in vartotojo_uzsakymai %}
+        <a href="{% url 'konkretus_uzsakymas' uzsakymas.id %}">
+      <p class="{% if uzsakymas.terminas_suejo %}text-danger{% endif %}">{{uzsakymas.automobilis}} -- {{ uzsakymas.terminas_suejo }}</p>
+      </a>
+      {% endfor %}
+    {% else %}
+      <p>Šiuo metu neturite užsakymų.</p>
+    {% endif %}
+<hr>
+  <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; pirmas</a>
+            <a href="?page={{ page_obj.previous_page_number }}">atgal</a>
+        {% endif %}
+
+        <span class="current">
+            {{ page_obj.number }} iš {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">pirmyn</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">paskutinis &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

@@ -49,7 +49,7 @@ class Uzsakymas(models.Model):
 
     statusas = models.IntegerField(choices=STATUSO_PASIRINKIMAI, default=1, help_text="Užsakymo statusas")
     vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    atlikimo_terminas = models.DateTimeField(verbose_name="Darbus atlikti iki",  null=True, blank=True,
+    atlikimo_terminas = models.DateField(verbose_name="Darbus atlikti iki",  null=True, blank=True,
                                               help_text="Užsakymo atlikimo terminas")
 
     class Meta:
@@ -64,10 +64,7 @@ class Uzsakymas(models.Model):
         return suma
 
     def terminas_suejo(self):
-        if self.atlikimo_terminas and date.today() > self.atlikimo_terminas:
-            return True
-        else:
-            return False
+        return self.atlikimo_terminas and date.today() > self.atlikimo_terminas
 
     def __str__(self):
         return f"{self.automobilis} -- {self.data}"
