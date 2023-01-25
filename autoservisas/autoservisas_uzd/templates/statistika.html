@@ -1,10 +1,12 @@
 {% extends "bazinis.html" %}
 
+{% block title %}Statistika{% endblock %}
+
 {% block content %}
-  <h4>Galime pasigirti savo statistika</h4>
-  <ul >
+<h1>Galime pasigirti savo statistika</h1>
+<ul >
     <li><strong>Šiuo metu mūsų teikiama paslaugų:</strong> {{ paslaugu_kiekis }}</li>
     <li><strong>Mūsų atlikti užsakymai:</strong> {{ atliktu_uzsakymu_kiekis }}</li>
     <li><strong>Mūsų aptarnaujamų automobilių:</strong> {{ automobiliu_kiekis }}</li>
-  </ul>
+</ul>
 {% endblock %}

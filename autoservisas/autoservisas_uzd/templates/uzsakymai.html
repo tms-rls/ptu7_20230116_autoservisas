@@ -1,15 +1,16 @@
 {% extends "bazinis.html" %}
 
-{% block title %}{% endblock %}
+{% block title %}Užsakymai{% endblock %}
 
 {% block content %}
- <h2>Užsakymų sąrašas</h2>
- {% for uzsakymas in uzsakymai %}
+<h2>Užsakymų sąrašas</h2>
+<br>
+{% for uzsakymas in uzsakymai %}
  <hr>
  <p><a href="{{ uzsakymas.id }}">{{uzsakymas}}</a> </p>
- {% endfor %}
- <div class="pagination">
-      <span class="step-links">
+{% endfor %}
+<div class="pagination">
+    <span class="step-links">
         {% if page_obj.has_previous %}
             <a href="?page=1">&laquo; pirmas</a>
             <a href="?page={{ page_obj.previous_page_number }}">atgal</a>

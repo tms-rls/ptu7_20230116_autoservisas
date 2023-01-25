@@ -1,20 +1,39 @@
 {% extends "bazinis.html" %}
 
-{% block title%}{% endblock %}
+{% block title%}Užsakymas{% endblock %}
 
 {% block content %}
- <h2>Užsakymo detalizacija</h2>
- <ul>
-   <li>Užsakymo data: {{ konkretus_uzsakymas.data }}</li>
-   <li>Automobilis: {{ konkretus_uzsakymas.automobilis }}</li>
-   <li>Užsakymo būsena: {{ konkretus_uzsakymas.get_statusas_display }}</li>
-   <li>Užsakymo suma: {{ konkretus_uzsakymas.bendra_uzsakymo_suma }}</li>
- </ul>
- <hr>
- <h2>Užsakytos paslaugos:</h2>
- <ol>
-  {% for eilute in konkretus_uzsakymas.eilutes.all %}
-   <li>{{ eilute.paslauga }} {{ eilute.kiekis }} {{ eilute.uzsakymo_eilutes_suma }}</li>
-  {% endfor %}
- </ol>
+<h2>Užsakymo detalizacija</h2>
+<ul>
+    <li>Užsakymo data: {{ konkretus_uzsakymas.data }}</li>
+    <li>Automobilis: {{ konkretus_uzsakymas.automobilis }}</li>
+    <li>Užsakymo būsena: {{ konkretus_uzsakymas.get_statusas_display }}</li>
+    <li>Užsakymo suma: {{ konkretus_uzsakymas.bendra_uzsakymo_suma }}</li>
+</ul>
+<hr>
+<h2>Užsakytos paslaugos:</h2>
+<table class="table table-bordered">
+<thead>
+<tr>
+    <th scope="col">Paslauga</th>
+    <th scope="col">Kaina</th>
+    <th scope="col">Kiekis</th>
+    <th scope="col">Suma</th>
+</tr>
+</thead>
+    <tbody>
+    {% for eilute in konkretus_uzsakymas.eilutes.all %}
+    <tr>
+        <th scope="row">{{ eilute.paslauga.pavadinimas }}</th>
+        <td scope="row">{{ eilute.paslauga.kaina }}</td>
+        <td scope="row">{{ eilute.kiekis }}</td>
+        <td scope="row">{{ eilute.uzsakymo_eilutes_suma }}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3"><b>BENDRA SUMA:</b></td>
+        <td>{{ uzsakymas.bendra_uzsakymo_suma }}</td>
+    </tr>
+    </tbody>
+</table>
 {% endblock %}
