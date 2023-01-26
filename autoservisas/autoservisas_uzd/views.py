@@ -1,6 +1,6 @@
 # Create your views here.
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import generic
 from django.core.paginator import Paginator
 from django.db.models import Q
@@ -8,6 +8,9 @@ from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import User
+from django.views.decorators.csrf import csrf_protect
+from django.contrib import messages
 
 
 def pasisveikinimas(request):
@@ -57,6 +60,37 @@ def paieska(request):
                                                 Q(vin_kodas__icontains=query) |
                                                 Q(klientas__icontains=query))
     return render(request, 'paieska.html', {'visi_automobiliai': search_results, 'query': query})
+
+
+@csrf_protect
+def register(request):
+    if request.method == "POST":
+        # pasiimame reikšmes iš registracijos formos
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        password2 = request.POST['password2']
+        # tikriname, ar sutampa slaptažodžiai
+        if password == password2:
+            # tikriname, ar neužimtas username
+            if User.objects.filter(username=username).exists():
+                messages.error(request, f'Vartotojo vardas {username} užimtas!')
+                return redirect('vartotojo_registracija')
+            else:
+                # tikriname, ar nėra tokio pat email
+                if User.objects.filter(email=email).exists():
+                    messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+                    return redirect('vartotojo_registracija')
+                else:
+                    # jeigu viskas tvarkoje, sukuriame naują vartotoją
+                    User.objects.create_user(username=username, email=email, password=password)
+                    messages.info(request, f'Vartotojas {username} užregistruotas!')
+                    return redirect('login')
+        else:
+            messages.error(request, 'Slaptažodžiai nesutampa!')
+            return redirect('vartotojo_registracija')  # nukreipiame i registracijos puslapi atgal pagal NAME is URLS'u
+    else:
+        return render(request, 'vartotojo_registracija.html')
 
 
 class UzsakymasListView(generic.ListView):

@@ -34,6 +34,7 @@
           <li class="nav-item"><a class="nav-link" href="{% url 'vartotojo_uzsakymai' %}">Mano užsakymai</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Atsijungti</a></li>
         {% else %}
+          <li class="nav-item"><a class="nav-link" href="{% url 'vartotojo_registracija' %}">Registruotis</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Prisijungti</a></li>
         {% endif %}
         <li>
@@ -45,6 +46,15 @@
     </div>
   </div>
 </nav>
+<div>
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{% if message.tags == 'error' %}danger{% elif message.tags == 'info' %}success{% endif %}" role="alert">
+      {{ message }}
+    </div>
+  {% endfor %}
+{% endif %}
+</div>
 <div class="container">
   {% block content %}{% endblock %}
 </div>
