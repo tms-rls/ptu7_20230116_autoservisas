@@ -32,8 +32,32 @@
     {% endfor %}
     <tr>
         <td colspan="3"><b>BENDRA SUMA:</b></td>
-        <td>{{ uzsakymas.bendra_uzsakymo_suma }}</td>
+        <td>{{ konkretus_uzsakymas.bendra_uzsakymo_suma }}</td>
     </tr>
     </tbody>
 </table>
+<hr>
+<h2>Vartotojų atsiliepimai</h2>
+{% if konkretus_uzsakymas.atsiliepimai.all %}
+    {% for atsiliepimas in konkretus_uzsakymas.atsiliepimai.all %}
+        <hr>
+        <strong>{{ atsiliepimas.komentatorius }}</strong>, <em>{{ atsiliepimas.atsiliepimo_data }}</em>
+        <p>{{ atsiliepimas.turinys }}</p>
+    {% endfor %}
+{% else %}
+    <p>Užsakymas neturi atsiliepimų</p>
+{% endif %}
+{% if user.is_authenticated %}
+    <div class="fieldWrapper">
+         <br/>
+        <h4>Palikite atsiliepimą:</h4>
+        <form action="" method="post">
+            {% csrf_token %}
+            {{ form.turinys }}
+            <br/>
+            <input type="submit" value="Išsaugoti">
+        </form>
+    </div>
+{% endif %}
+
 {% endblock %}

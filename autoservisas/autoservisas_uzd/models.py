@@ -99,3 +99,17 @@ class UzsakymoEilute(models.Model):
 
     def __str__(self):
         return f"{self.paslauga} ---- {self.kiekis}"
+
+
+class UzsakymoAtsiliepimas(models.Model):
+    uzsakymas = models.ForeignKey(to="Uzsakymas", verbose_name="Užsakymas", on_delete=models.SET_NULL, null=True,
+                                  blank=True, related_name="atsiliepimai")
+    komentatorius = models.ForeignKey(to=User, verbose_name="Vartotojas", on_delete=models.SET_NULL, null=True,
+                                      blank=True)
+    atsiliepimo_data = models.DateTimeField(verbose_name="Atsiliepimo data", auto_now_add=True)
+    turinys = models.TextField(verbose_name="Atsiliepimas", max_length=3000)
+
+    class Meta:
+        verbose_name = "Užsakymo atsiliepimas"
+        verbose_name_plural = "Užsakymo atsiliepimai"
+        ordering = ["-atsiliepimo_data"]

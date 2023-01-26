@@ -6,7 +6,8 @@ from .models import (AutomobilioModelis,
                      Automobilis,
                      Uzsakymas,
                      Paslauga,
-                     UzsakymoEilute)
+                     UzsakymoEilute,
+                     UzsakymoAtsiliepimas)
 
 
 class AutomobilisAdmin(admin.ModelAdmin):
@@ -34,8 +35,13 @@ class PaslaugaAdmin(admin.ModelAdmin):
     list_display = ("pavadinimas", "kaina")
 
 
+class UzsakymoAtsiliepimasAdmin(admin.ModelAdmin):
+    list_display = ("uzsakymas", "komentatorius", "atsiliepimo_data", "turinys")
+
+
 admin.site.register(AutomobilioModelis)
 admin.site.register(Automobilis, AutomobilisAdmin)
 admin.site.register(Uzsakymas, UzsakymasAdmin)
 admin.site.register(Paslauga, PaslaugaAdmin)
 admin.site.register(UzsakymoEilute, UzsakymoEiluteAdmin)
+admin.site.register(UzsakymoAtsiliepimas, UzsakymoAtsiliepimasAdmin)

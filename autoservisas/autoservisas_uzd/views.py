@@ -1,12 +1,14 @@
 # Create your views here.
 
-from django.shortcuts import render, get_object_or_404, redirect
+from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views import generic
+from django.views.generic.edit import FormMixin
 from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
+from .forms import UzsakymoAtsiliepimasForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
@@ -100,10 +102,32 @@ class UzsakymasListView(generic.ListView):
     context_object_name = "uzsakymai"
 
 
-class UzsakymasDetailView(generic.DetailView):
+class UzsakymasDetailView(FormMixin, generic.DetailView):
     model = Uzsakymas
     template_name = "uzsakymas.html"
     context_object_name = "konkretus_uzsakymas"
+    form_class = UzsakymoAtsiliepimasForm
+
+    # nurodome, kur atsidursime komentaro sėkmės atveju.
+    def get_success_url(self):
+        return reverse("konkretus_uzsakymas", kwargs={"pk": self.object.id})    # grazina i save todel reikia id
+
+    # standartinis post metodo perrašymas, naudojant FormMixin, galite kopijuoti tiesiai į savo projektą.
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    # štai čia nurodome, kad uzsakymas bus būtent tas, po kuriuo komentuojame, o vartotojas bus tas, kuris
+    # yra prisijungęs.
+    def form_valid(self, form):
+        form.instance.uzsakymas = self.object
+        form.instance.komentatorius = self.request.user
+        form.save()
+        return super(UzsakymasDetailView, self).form_valid(form)
 
 
 class VartotojoUzsakymaiListView(generic.ListView, LoginRequiredMixin):
