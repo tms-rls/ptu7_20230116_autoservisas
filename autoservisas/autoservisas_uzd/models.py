@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import date
 from tinymce.models import HTMLField
+from PIL import Image
 
 
 class AutomobilioModelis(models.Model):
@@ -125,4 +126,12 @@ class VartotojoProfilis(models.Model):
 
     def __str__(self):
         return f"{self.vartotojas.username} profilis"
+
+    def save(self, force_insert=False, force_update=False, using=None, update_fields=None):
+        super().save(force_insert, force_update, using, update_fields)
+        paveikslas = Image.open(self.foto.path)
+        if paveikslas.height > 300 or paveikslas.width > 300:
+            rodymo_dydis = (300, 300)
+            paveikslas.thumbnail(rodymo_dydis)
+            paveikslas.save(self.foto.path)
 

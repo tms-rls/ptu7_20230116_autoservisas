@@ -7,6 +7,8 @@
 <br>
 {% for uzsakymas in uzsakymai %}
  <hr>
+ <img class="rounded-circle" src="{{uzsakymas.vartotojas.vartotojoprofilis.foto.url}}">
+ <p>{{uzsakymas.vartotojas}}</p>
  <p><a href="{{ uzsakymas.id }}">{{uzsakymas}}</a> </p>
 {% endfor %}
 <div class="pagination">

@@ -8,7 +8,7 @@ from django.db.models import Q
 from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
-from .forms import UzsakymoAtsiliepimasForm
+from .forms import UzsakymoAtsiliepimasForm, UserUpdateForm, VartotojoProfilisUpdateForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
@@ -98,7 +98,22 @@ def register(request):
 
 @login_required
 def vartotojo_profilis(request):
-    return render(request, 'vartotojo_profilis.html')
+    if request.method == "POST":
+        u_form = UserUpdateForm(request.POST, instance=request.user)
+        p_form = VartotojoProfilisUpdateForm(request.POST, request.FILES, instance=request.user.vartotojoprofilis)
+        if u_form.is_valid() and p_form.is_valid():
+            u_form.save()
+            p_form.save()
+            messages.success(request, "Vartotojo profilis atnaujintas!")
+            return redirect("vartotojo_profilis")
+    else:
+        u_form = UserUpdateForm(instance=request.user)
+        p_form = VartotojoProfilisUpdateForm(instance=request.user.vartotojoprofilis)
+    context = {
+        'u_form': u_form,
+        'p_form': p_form,
+    }
+    return render(request, 'vartotojo_profilis.html', context=context)
 
 
 class UzsakymasListView(generic.ListView):
