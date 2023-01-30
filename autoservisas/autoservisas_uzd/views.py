@@ -13,6 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def pasisveikinimas(request):
@@ -93,6 +94,11 @@ def register(request):
             return redirect('vartotojo_registracija')  # nukreipiame i registracijos puslapi atgal pagal NAME is URLS'u
     else:
         return render(request, 'vartotojo_registracija.html')
+
+
+@login_required
+def vartotojo_profilis(request):
+    return render(request, 'vartotojo_profilis.html')
 
 
 class UzsakymasListView(generic.ListView):

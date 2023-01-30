@@ -7,7 +7,8 @@ from .models import (AutomobilioModelis,
                      Uzsakymas,
                      Paslauga,
                      UzsakymoEilute,
-                     UzsakymoAtsiliepimas)
+                     UzsakymoAtsiliepimas,
+                     VartotojoProfilis)
 
 
 class AutomobilisAdmin(admin.ModelAdmin):
@@ -45,3 +46,4 @@ admin.site.register(Uzsakymas, UzsakymasAdmin)
 admin.site.register(Paslauga, PaslaugaAdmin)
 admin.site.register(UzsakymoEilute, UzsakymoEiluteAdmin)
 admin.site.register(UzsakymoAtsiliepimas, UzsakymoAtsiliepimasAdmin)
+admin.site.register(VartotojoProfilis)

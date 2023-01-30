@@ -113,3 +113,16 @@ class UzsakymoAtsiliepimas(models.Model):
         verbose_name = "Užsakymo atsiliepimas"
         verbose_name_plural = "Užsakymo atsiliepimai"
         ordering = ["-atsiliepimo_data"]
+
+
+class VartotojoProfilis(models.Model):
+    vartotojas = models.OneToOneField(to=User, on_delete=models.CASCADE)
+    foto = models.ImageField(default="profilio_foto/default.png", upload_to="profilio_foto")
+
+    class Meta:
+        verbose_name = "Vartotojo profilis"
+        verbose_name_plural = "Vartotojų profiliai"
+
+    def __str__(self):
+        return f"{self.vartotojas.username} profilis"
+

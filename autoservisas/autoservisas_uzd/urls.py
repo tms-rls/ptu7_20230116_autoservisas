@@ -12,4 +12,5 @@ urlpatterns = [
     path('paieska/', views.paieska, name='paieska'),
     path('vartotojouzsakymai/', views.VartotojoUzsakymaiListView.as_view(), name="vartotojo_uzsakymai"),
     path('registracija/', views.register, name="vartotojo_registracija"),
+    path('vartotojoprofilis/', views.vartotojo_profilis, name="vartotojo_profilis")
     ]
