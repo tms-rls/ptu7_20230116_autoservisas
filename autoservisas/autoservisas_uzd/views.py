@@ -165,3 +165,16 @@ class VartotojoUzsakymasDetailView(LoginRequiredMixin, generic.DetailView):
     model = Uzsakymas
     template_name = "vartotojo_uzsakymas.html"
     context_object_name = "konkretus_vartotojo_uzsakymas"
+
+
+class VartotojoUzsakymasCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Uzsakymas
+    fields = ["automobilis", "atlikimo_terminas", "statusas"]
+    success_url = "/autoservice/vartotojouzsakymai/"
+    template_name = "vartotojo_uzsakymo_forma.html"
+
+    def form_valid(self, form):
+        form.instance.vartotojas = self.request.user
+        form.save()
+        return super().form_valid(form)
+
