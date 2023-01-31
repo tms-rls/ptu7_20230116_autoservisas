@@ -8,7 +8,7 @@ from django.db.models import Q
 from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
-from .forms import UzsakymoAtsiliepimasForm, UserUpdateForm, VartotojoProfilisUpdateForm
+from .forms import UzsakymoAtsiliepimasForm, UserUpdateForm, VartotojoProfilisUpdateForm, VartotojoUzsakymasCreateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
@@ -169,9 +169,10 @@ class VartotojoUzsakymasDetailView(LoginRequiredMixin, generic.DetailView):
 
 class VartotojoUzsakymasCreateView(LoginRequiredMixin, generic.CreateView):
     model = Uzsakymas
-    fields = ["automobilis", "atlikimo_terminas", "statusas"]
+    # fields = ["automobilis", "atlikimo_terminas", "statusas"]  # del datepicker kuriama jau per forms.py o ne per cia
     success_url = "/autoservice/vartotojouzsakymai/"
     template_name = "vartotojo_uzsakymo_forma.html"
+    form_class = VartotojoUzsakymasCreateForm
 
     def form_valid(self, form):
         form.instance.vartotojas = self.request.user
@@ -181,9 +182,10 @@ class VartotojoUzsakymasCreateView(LoginRequiredMixin, generic.CreateView):
 
 class VartotojoUzsakymasUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Uzsakymas
-    fields = ["automobilis", "atlikimo_terminas", "statusas"]
+    # fields = ["automobilis", "atlikimo_terminas", "statusas"]  # del datepicker kuriama jau per forms.py o ne per cia
     success_url = "/autoservice/vartotojouzsakymai/"
     template_name = "vartotojo_uzsakymo_forma.html"
+    form_class = VartotojoUzsakymasCreateForm
 
     def test_func(self):
         uzsakymas = self.get_object()

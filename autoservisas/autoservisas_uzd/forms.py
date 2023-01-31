@@ -1,4 +1,4 @@
-from .models import UzsakymoAtsiliepimas, VartotojoProfilis
+from .models import UzsakymoAtsiliepimas, VartotojoProfilis, Uzsakymas
 from django import forms
 from django.contrib.auth.models import User
 
@@ -20,3 +20,14 @@ class VartotojoProfilisUpdateForm(forms.ModelForm):
     class Meta:
         model = VartotojoProfilis
         fields = ["foto"]
+
+
+class TerminoIvedimas(forms.DateInput):
+    input_type = 'date'
+
+
+class VartotojoUzsakymasCreateForm(forms.ModelForm):
+    class Meta:
+        model = Uzsakymas
+        fields = ["automobilis", "vartotojas", "atlikimo_terminas", "statusas"]
+        widgets = {"vartotojas": forms.HiddenInput(), "atlikimo_terminas": TerminoIvedimas()}
