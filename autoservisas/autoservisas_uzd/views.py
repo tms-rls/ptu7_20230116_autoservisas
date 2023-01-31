@@ -194,3 +194,13 @@ class VartotojoUzsakymasUpdateView(LoginRequiredMixin, UserPassesTestMixin, gene
         form.save()
         return super().form_valid(form)
 
+
+class VartotojoUzsakymasDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = Uzsakymas
+    success_url = "/autoservice/vartotojouzsakymai/"
+    template_name = "vartotojo_uzsakymo_istrynimas.html"
+    context_object_name = "konkretus_vartotojo_uzsakymas"
+
+    def test_func(self):
+        uzsakymas = self.get_object()
+        return uzsakymas.vartotojas == self.request.user

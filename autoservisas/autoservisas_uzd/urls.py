@@ -16,4 +16,5 @@ urlpatterns = [
     path('vartotojouzsakymai/<int:pk>', views.VartotojoUzsakymasDetailView.as_view(), name="vartotojo_konkretus_uzsakymas"),
     path('vartotojouzsakymai/sukurti', views.VartotojoUzsakymasCreateView.as_view(), name="vartotojo_uzsakymo_sukurimas"),
     path('vartotojouzsakymai/<int:pk>/atnaujinti', views.VartotojoUzsakymasUpdateView.as_view(), name="vartotojo_uzsakymo_atnaujinimas"),
+    path('vartotojouzsakymai/<int:pk>/istrinti', views.VartotojoUzsakymasDeleteView.as_view(), name="vartotojo_uzsakymo_trynimas"),
     ]
