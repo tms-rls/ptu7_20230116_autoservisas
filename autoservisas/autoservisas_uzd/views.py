@@ -9,7 +9,7 @@ from .models import (Automobilis,
                      Uzsakymas,
                      Paslauga)
 from .forms import UzsakymoAtsiliepimasForm, UserUpdateForm, VartotojoProfilisUpdateForm
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
@@ -172,6 +172,22 @@ class VartotojoUzsakymasCreateView(LoginRequiredMixin, generic.CreateView):
     fields = ["automobilis", "atlikimo_terminas", "statusas"]
     success_url = "/autoservice/vartotojouzsakymai/"
     template_name = "vartotojo_uzsakymo_forma.html"
+
+    def form_valid(self, form):
+        form.instance.vartotojas = self.request.user
+        form.save()
+        return super().form_valid(form)
+
+
+class VartotojoUzsakymasUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = Uzsakymas
+    fields = ["automobilis", "atlikimo_terminas", "statusas"]
+    success_url = "/autoservice/vartotojouzsakymai/"
+    template_name = "vartotojo_uzsakymo_forma.html"
+
+    def test_func(self):
+        uzsakymas = self.get_object()
+        return uzsakymas.vartotojas == self.request.user
 
     def form_valid(self, form):
         form.instance.vartotojas = self.request.user

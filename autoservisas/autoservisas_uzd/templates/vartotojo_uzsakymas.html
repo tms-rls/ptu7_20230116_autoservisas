@@ -6,7 +6,6 @@
 
 {% load static %}
 
-
 <h2>Man priskirtas užsakymas:</h2>
 <hr>
 {% if konkretus_vartotojo_uzsakymas.automobilis.paveikslelis %}
@@ -15,11 +14,15 @@
     <img src="{% static 'img/no-image.png' %}" style="margin-bottom: 20px; width: 200px" alt="...">
 {% endif %}
 <ul>
-<li><strong class="{% if konkretus_vartotojo_uzsakymas.terminas_suejo %}text-danger{% endif %}">
-    Automobilio modelis: {{konkretus_vartotojo_uzsakymas.automobilis.automobilio_modelis}} </strong></li>
-<li><strong>
-    Valstybinis numeris: {{konkretus_vartotojo_uzsakymas.automobilis.valstybinis_nr}}
-</strong></li>
-<li><strong>Atlikimo terminas:</strong> {{konkretus_vartotojo_uzsakymas.terminas_suejo}}</li>
+    <li><strong class="{% if konkretus_vartotojo_uzsakymas.terminas_suejo %}text-danger{% endif %}">
+        Automobilio modelis:</strong> {{konkretus_vartotojo_uzsakymas.automobilis.automobilio_modelis}}</li>
+    <li><strong>Valstybinis numeris:</strong> {{konkretus_vartotojo_uzsakymas.automobilis.valstybinis_nr}}</li>
+    <li><strong>Atlikimo terminas:</strong> {{konkretus_vartotojo_uzsakymas.terminas_suejo}}</li>
+    <li><strong>Užsakymo statusas:</strong> {{konkretus_vartotojo_uzsakymas.get_statusas_display}}</li>
+    {% if konkretus_vartotojo_uzsakymas.vartotojas == user %}
+        <div>
+             <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'vartotojo_uzsakymo_atnaujinimas' konkretus_vartotojo_uzsakymas.pk %}">Redaguoti</a>
+        </div>
+    {% endif %}
 </ul>
 {% endblock %}
