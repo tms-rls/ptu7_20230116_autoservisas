@@ -1,0 +1,25 @@
+{% extends "bazinis.html" %}
+
+{% block title %}Vartotojo konkretus užsakymas{% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+
+<h2>Man priskirtas užsakymas:</h2>
+<hr>
+{% if konkretus_vartotojo_uzsakymas.automobilis.paveikslelis %}
+    <img src="{{konkretus_vartotojo_uzsakymas.automobilis.paveikslelis.url}}" class="card-img-top" alt="...">
+{% else %}
+    <img src="{% static 'img/no-image.png' %}" style="margin-bottom: 20px; width: 200px" alt="...">
+{% endif %}
+<ul>
+<li><strong class="{% if konkretus_vartotojo_uzsakymas.terminas_suejo %}text-danger{% endif %}">
+    Automobilio modelis: {{konkretus_vartotojo_uzsakymas.automobilis.automobilio_modelis}} </strong></li>
+<li><strong>
+    Valstybinis numeris: {{konkretus_vartotojo_uzsakymas.automobilis.valstybinis_nr}}
+</strong></li>
+<li><strong>Atlikimo terminas:</strong> {{konkretus_vartotojo_uzsakymas.terminas_suejo}}</li>
+</ul>
+{% endblock %}

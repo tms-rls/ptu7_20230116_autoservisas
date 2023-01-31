@@ -159,3 +159,9 @@ class VartotojoUzsakymaiListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Uzsakymas.objects.filter(vartotojas=self.request.user)
+
+
+class VartotojoUzsakymasDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Uzsakymas
+    template_name = "vartotojo_uzsakymas.html"
+    context_object_name = "konkretus_vartotojo_uzsakymas"
