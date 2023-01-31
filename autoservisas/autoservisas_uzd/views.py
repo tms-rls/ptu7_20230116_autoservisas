@@ -151,7 +151,7 @@ class UzsakymasDetailView(FormMixin, generic.DetailView):
         return super(UzsakymasDetailView, self).form_valid(form)
 
 
-class VartotojoUzsakymaiListView(generic.ListView, LoginRequiredMixin):
+class VartotojoUzsakymaiListView(LoginRequiredMixin, generic.ListView):
     model = Uzsakymas
     template_name = "vartotojo_uzsakymai.html"
     paginate_by = 2
