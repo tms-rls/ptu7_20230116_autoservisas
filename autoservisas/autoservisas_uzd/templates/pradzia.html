@@ -1,9 +1,11 @@
 {% extends "bazinis.html" %}
 
-{% block title %}Pradžia{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Index" %}{% endblock %}
 
 {% block content %}
-<h1>Sveiki atvykę!</h1>
-<p>Šiame puslapyje lankotės jau {{ sesiju_kiekis }} kartą</p>
+<h1>{% trans "Welcome" %}!</h1>
+<p>{% trans "Your visits here" %}: {{ sesiju_kiekis }}</p>
 {% endblock %}
 

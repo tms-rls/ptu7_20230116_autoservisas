@@ -1,12 +1,14 @@
 {% extends "bazinis.html" %}
 
-{% block title %}Statistika{% endblock %}
+{% load i18n %}
+
+{% block title %}{% trans "Statistics" %} {% endblock %}
 
 {% block content %}
-<h1>Galime pasigirti savo statistika</h1>
+<h1>{% trans "We can brag our statistics" %}</h1>
 <ul >
-    <li><strong>Šiuo metu mūsų teikiama paslaugų:</strong> {{ paslaugu_kiekis }}</li>
-    <li><strong>Mūsų atlikti užsakymai:</strong> {{ atliktu_uzsakymu_kiekis }}</li>
-    <li><strong>Mūsų aptarnaujamų automobilių:</strong> {{ automobiliu_kiekis }}</li>
+    <li><strong>{% trans "Currently providing services" %}:</strong> {{ paslaugu_kiekis }}</li>
+    <li><strong>{% trans "Finished orders" %}:</strong> {{ atliktu_uzsakymu_kiekis }}</li>
+    <li><strong>{% trans "Serviced cars" %}:</strong> {{ automobiliu_kiekis }}</li>
 </ul>
 {% endblock %}

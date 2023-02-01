@@ -14,6 +14,7 @@ from django.contrib.auth.forms import User
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.utils.translation import gettext as _
 
 
 def pasisveikinimas(request):
@@ -77,20 +78,24 @@ def register(request):
         if password == password2:
             # tikriname, ar neužimtas username
             if User.objects.filter(username=username).exists():
-                messages.error(request, f'Vartotojo vardas {username} užimtas!')
+                # messages.error(request, f'Vartotojo vardas {username} užimtas!') # vertimo tikslais uzkomentuota
+                messages.error(request, _('Username %s already exists!') % username)
                 return redirect('vartotojo_registracija')
             else:
                 # tikriname, ar nėra tokio pat email
                 if User.objects.filter(email=email).exists():
-                    messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+                    # messages.error(request, f'Vartotojas su el. paštu {email} jau užregistruotas!')
+                    messages.error(request, _('Email %s already exists!') % email)
                     return redirect('vartotojo_registracija')
                 else:
                     # jeigu viskas tvarkoje, sukuriame naują vartotoją
                     User.objects.create_user(username=username, email=email, password=password)
-                    messages.info(request, f'Vartotojas {username} užregistruotas!')
+                    # messages.info(request, f'Vartotojas {username} užregistruotas!')
+                    messages.info(request, _('User %s registered!') % username)
                     return redirect('login')
         else:
-            messages.error(request, 'Slaptažodžiai nesutampa!')
+            # messages.error(request, 'Slaptažodžiai nesutampa!')
+            messages.error(request, _('Passwords does not match!'))
             return redirect('vartotojo_registracija')  # nukreipiame i registracijos puslapi atgal pagal NAME is URLS'u
     else:
         return render(request, 'vartotojo_registracija.html')

@@ -1,8 +1,9 @@
 
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
+    path('i18n/', include('django.conf.urls.i18n')),
     path('', views.pasisveikinimas, name='pradzia'),  # name nurodo web psl pavadinima, naudojama puslapiu iskvietimuose
     path('statistika/', views.statistika, name='statistika'),  # views faile iskvieciama apibrezta funkcija statistika
     path("automobiliai/", views.visi_automobiliai, name="visi_automobiliai"),
