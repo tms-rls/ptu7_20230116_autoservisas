@@ -183,7 +183,7 @@ class VartotojoUzsakymasCreateView(LoginRequiredMixin, generic.CreateView):
 class VartotojoUzsakymasUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
     model = Uzsakymas
     # fields = ["automobilis", "atlikimo_terminas", "statusas"]  # del datepicker kuriama jau per forms.py o ne per cia
-    success_url = "/autoservice/vartotojouzsakymai/"
+    # success_url = "/autoservice/vartotojouzsakymai/"  # pakeiciam i funkcija kad grazintu i jau suredaguota uzsakyma
     template_name = "vartotojo_uzsakymo_forma.html"
     form_class = VartotojoUzsakymasCreateForm
 
@@ -195,6 +195,9 @@ class VartotojoUzsakymasUpdateView(LoginRequiredMixin, UserPassesTestMixin, gene
         form.instance.vartotojas = self.request.user
         form.save()
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse("vartotojo_konkretus_uzsakymas", kwargs={"pk": self.object.id})
 
 
 class VartotojoUzsakymasDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):

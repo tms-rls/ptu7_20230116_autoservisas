@@ -23,11 +23,11 @@ class VartotojoProfilisUpdateForm(forms.ModelForm):
 
 
 class TerminoIvedimas(forms.DateInput):
-    input_type = 'date'
+    input_type = 'datetime-local'
 
 
 class VartotojoUzsakymasCreateForm(forms.ModelForm):
     class Meta:
         model = Uzsakymas
-        fields = ["automobilis", "vartotojas", "atlikimo_terminas", "statusas"]
-        widgets = {"vartotojas": forms.HiddenInput(), "atlikimo_terminas": TerminoIvedimas()}
+        fields = ["automobilis", "atlikimo_terminas", "statusas"]
+        widgets = {"atlikimo_terminas": TerminoIvedimas()}
