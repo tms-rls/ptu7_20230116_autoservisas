@@ -1,0 +1,22 @@
+{% extends "bazinis.html" %}
+
+{% block title %}Ištrinti vartotojo užsakymo eilutę{% endblock %}
+
+{% block content %}
+
+{% load crispy_forms_tags %}
+
+<div class="content-section">
+<form method="POST">
+    {% csrf_token %}
+    <fieldset class="form-group">
+        <legend class="border-bottom mb-4">Ištrinti užsakymo eilutę</legend>
+        <h2>Ar tikrai norite ištrinti užsakymo eilutę {{ vartotojo_uzsakymo_eilute }}?</h2>
+    </fieldset>
+    <div class="form-group">
+        <button class="btn btn-outline-danger" type="submit">Taip, ištrinti</button>
+        <a class="btn btn-outline-secondary" href="{% url 'konkretus_uzsakymas' vartotojo_uzsakymo_eilute.uzsakymas.pk %}">Atšaukti</a>
+    </div>
+</form>
+</div>
+{% endblock content %}

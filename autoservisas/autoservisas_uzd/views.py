@@ -7,7 +7,8 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from .models import (Automobilis,
                      Uzsakymas,
-                     Paslauga)
+                     Paslauga,
+                     UzsakymoEilute)
 from .forms import UzsakymoAtsiliepimasForm, UserUpdateForm, VartotojoProfilisUpdateForm, VartotojoUzsakymasCreateForm
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.forms import User
@@ -166,12 +167,6 @@ class VartotojoUzsakymaiListView(LoginRequiredMixin, generic.ListView):
         return Uzsakymas.objects.filter(vartotojas=self.request.user)
 
 
-class VartotojoUzsakymasDetailView(LoginRequiredMixin, generic.DetailView):
-    model = Uzsakymas
-    template_name = "vartotojo_uzsakymas.html"
-    context_object_name = "konkretus_vartotojo_uzsakymas"
-
-
 class VartotojoUzsakymasCreateView(LoginRequiredMixin, generic.CreateView):
     model = Uzsakymas
     # fields = ["automobilis", "atlikimo_terminas", "statusas"]  # del datepicker kuriama jau per forms.py o ne per cia
@@ -202,15 +197,64 @@ class VartotojoUzsakymasUpdateView(LoginRequiredMixin, UserPassesTestMixin, gene
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse("vartotojo_konkretus_uzsakymas", kwargs={"pk": self.object.id})
+        return reverse("konkretus_uzsakymas", kwargs={"pk": self.object.id})
 
 
 class VartotojoUzsakymasDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
     model = Uzsakymas
     success_url = "/autoservice/vartotojouzsakymai/"
     template_name = "vartotojo_uzsakymo_istrynimas.html"
-    context_object_name = "konkretus_vartotojo_uzsakymas"
+    context_object_name = "konkretus_uzsakymas"
 
     def test_func(self):
         uzsakymas = self.get_object()
         return uzsakymas.vartotojas == self.request.user
+
+
+class VartotojoUzsakymoEiluteCreateView(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
+    model = UzsakymoEilute
+    fields = ["paslauga", "kiekis"]
+    template_name = "vartotojo_uzsakymo_eilutes_forma.html"
+
+    def form_valid(self, form):
+        form.instance.uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk'])
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['pk'])
+        return self.request.user == uzsakymas.vartotojas
+
+    def get_success_url(self):
+        return reverse("konkretus_uzsakymas", kwargs={"pk": self.kwargs['pk']})
+
+
+class VartotojoUzsakymoEiluteUpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
+    model = UzsakymoEilute
+    fields = ["paslauga", "kiekis"]
+    template_name = "vartotojo_uzsakymo_eilutes_forma.html"
+
+    def form_valid(self, form):
+        form.instance.uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['uzsakymas_pk'])
+        form.save()
+        return super().form_valid(form)
+
+    def test_func(self):
+        uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['uzsakymas_pk'])
+        return self.request.user == uzsakymas.vartotojas
+
+    def get_success_url(self):
+        return reverse("konkretus_uzsakymas", kwargs={"pk": self.kwargs['uzsakymas_pk']})
+
+
+class VartotojoUzsakymoEiluteDeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
+    model = UzsakymoEilute
+    template_name = "vartotojo_uzsakymo_eilutes_istrynimas.html"
+    context_object_name = "vartotojo_uzsakymo_eilute"
+
+    def get_success_url(self):
+        return reverse("konkretus_uzsakymas", kwargs={"pk": self.kwargs['uzsakymas_pk']})
+
+    def test_func(self):
+        uzsakymas = Uzsakymas.objects.get(pk=self.kwargs['uzsakymas_pk'])
+        return self.request.user == uzsakymas.vartotojas

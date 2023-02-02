@@ -2,14 +2,32 @@
 
 {% block title%}Užsakymas{% endblock %}
 
+{% load static %}
+
 {% block content %}
+
+{% if konkretus_uzsakymas.automobilis.paveikslelis %}
+    <img src="{{konkretus_uzsakymas.automobilis.paveikslelis.url}}" style="margin-bottom: 20px; width: 400px" alt="...">
+{% else %}
+    <img src="{% static 'img/no-image.png' %}" style="margin-bottom: 20px; width: 200px" alt="...">
+{% endif %}
+
 <h2>Užsakymo detalizacija</h2>
 <ul>
-    <li>Užsakymo data: {{ konkretus_uzsakymas.data }}</li>
-    <li>Automobilis: {{ konkretus_uzsakymas.automobilis }}</li>
-    <li>Užsakymo būsena: {{ konkretus_uzsakymas.get_statusas_display }}</li>
-    <li>Užsakymo suma: {{ konkretus_uzsakymas.bendra_uzsakymo_suma }}</li>
+    <li><strong>Užsakymo data:</strong> {{ konkretus_uzsakymas.data }}</li>
+    <li><strong>Automobilio modelis:</strong> {{ konkretus_uzsakymas.automobilis.automobilio_modelis }}</li>
+    <li><strong>Valstybinis numeris:</strong> {{konkretus_uzsakymas.automobilis.valstybinis_nr}}</li>
+    <li><strong>Užsakymo būsena:</strong> {{ konkretus_uzsakymas.get_statusas_display }}</li>
+    <li class="{% if konkretus_uzsakymas.terminas_suejo %}text-danger{% endif %}"><strong>
+        Atlikimo terminas:</strong> {{konkretus_uzsakymas.atlikimo_terminas}}
+    </li>
 </ul>
+{% if konkretus_uzsakymas.vartotojas == user %}
+    <div>
+         <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'vartotojo_uzsakymo_atnaujinimas' konkretus_uzsakymas.pk %}">Redaguoti</a>
+         <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'vartotojo_uzsakymo_trynimas' konkretus_uzsakymas.pk %}">Ištrinti</a>
+    </div>
+{% endif %}
 <hr>
 <h2>Užsakytos paslaugos:</h2>
 <table class="table table-bordered">
@@ -19,6 +37,9 @@
     <th scope="col">Kaina</th>
     <th scope="col">Kiekis</th>
     <th scope="col">Suma</th>
+    {% if konkretus_uzsakymas.vartotojas == user %}
+    <th scope="col"></th>
+    {%endif%}
 </tr>
 </thead>
     <tbody>
@@ -28,6 +49,12 @@
         <td scope="row">{{ eilute.paslauga.kaina }}</td>
         <td scope="row">{{ eilute.kiekis }}</td>
         <td scope="row">{{ eilute.uzsakymo_eilutes_suma }}</td>
+        {% if konkretus_uzsakymas.vartotojas == user %}
+        <td scope="row">
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'vartotojo_uzsakymo_eilutes_atnaujinimas' konkretus_uzsakymas.pk eilute.pk %}">Redaguoti</a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'vartotojo_uzsakymo_eilutes_istrynimas' konkretus_uzsakymas.pk eilute.pk%}">Ištrinti</a>
+        </td>
+        {%endif%}
     </tr>
     {% endfor %}
     <tr>
@@ -36,6 +63,13 @@
     </tr>
     </tbody>
 </table>
+
+{% if konkretus_uzsakymas.vartotojas == user %}
+<div>
+    <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'vartotojo_uzsakymo_eilutes_sukurimas' konkretus_uzsakymas.pk %}">Pridėti užsakymo eilutę</a>
+</div>
+{%endif%}
+
 <hr>
 <h2>Vartotojų atsiliepimai</h2>
 {% if konkretus_uzsakymas.atsiliepimai.all %}
@@ -59,5 +93,4 @@
         </form>
     </div>
 {% endif %}
-
 {% endblock %}

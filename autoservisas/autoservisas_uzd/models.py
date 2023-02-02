@@ -3,10 +3,13 @@
 
 from django.db import models
 from django.contrib.auth.models import User
-from datetime import date
+import datetime
+import pytz
 from tinymce.models import HTMLField
 from PIL import Image
 from django.utils.translation import gettext_lazy as _
+
+utc = pytz.UTC
 
 
 class AutomobilioModelis(models.Model):
@@ -53,7 +56,7 @@ class Uzsakymas(models.Model):
 
     statusas = models.IntegerField(choices=STATUSO_PASIRINKIMAI, default=1, help_text="Užsakymo statusas")
     vartotojas = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
-    atlikimo_terminas = models.DateField(verbose_name=_("Due date"),  null=True, blank=True,
+    atlikimo_terminas = models.DateTimeField(verbose_name=_("Due date"),  null=True, blank=True,
                                          help_text="Užsakymo atlikimo terminas")
 
     class Meta:
@@ -68,7 +71,10 @@ class Uzsakymas(models.Model):
         return suma
 
     def terminas_suejo(self):
-        return self.atlikimo_terminas and date.today() > self.atlikimo_terminas
+        if self.atlikimo_terminas:
+            return datetime.datetime.today().replace(tzinfo=utc) > self.atlikimo_terminas.replace(tzinfo=utc)
+        else:
+            return False
 
     def __str__(self):
         return f"{self.automobilis} -- {self.data}"
@@ -100,7 +106,7 @@ class UzsakymoEilute(models.Model):
         return self.paslauga.kaina * self.kiekis
 
     def __str__(self):
-        return f"{self.paslauga} ---- {self.kiekis}"
+        return f"{self.paslauga}"
 
 
 class UzsakymoAtsiliepimas(models.Model):

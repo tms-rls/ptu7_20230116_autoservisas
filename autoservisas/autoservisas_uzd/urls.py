@@ -14,8 +14,10 @@ urlpatterns = [
     path('registracija/', views.register, name="vartotojo_registracija"),
     path('vartotojoprofilis/', views.vartotojo_profilis, name="vartotojo_profilis"),
     path('vartotojouzsakymai/', views.VartotojoUzsakymaiListView.as_view(), name="vartotojo_uzsakymai"),
-    path('vartotojouzsakymai/<int:pk>', views.VartotojoUzsakymasDetailView.as_view(), name="vartotojo_konkretus_uzsakymas"),
     path('vartotojouzsakymai/sukurti', views.VartotojoUzsakymasCreateView.as_view(), name="vartotojo_uzsakymo_sukurimas"),
     path('vartotojouzsakymai/<int:pk>/atnaujinti', views.VartotojoUzsakymasUpdateView.as_view(), name="vartotojo_uzsakymo_atnaujinimas"),
     path('vartotojouzsakymai/<int:pk>/istrinti', views.VartotojoUzsakymasDeleteView.as_view(), name="vartotojo_uzsakymo_trynimas"),
+    path('vartotojouzsakymai/<int:pk>/sukurtieilute', views.VartotojoUzsakymoEiluteCreateView.as_view(), name="vartotojo_uzsakymo_eilutes_sukurimas"),
+    path('vartotojouzsakymai/<int:uzsakymas_pk>/atnaujintieilute/<int:pk>', views.VartotojoUzsakymoEiluteUpdateView.as_view(), name="vartotojo_uzsakymo_eilutes_atnaujinimas"),
+    path('vartotojouzsakymai/<int:uzsakymas_pk>/istrintieilute/<int:pk>', views.VartotojoUzsakymoEiluteDeleteView.as_view(), name="vartotojo_uzsakymo_eilutes_istrynimas"),
     ]
